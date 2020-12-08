@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span>
+<span class="font-weight-semibold">Disciplinas</span>
 @endsection
 
 @section('page-title-buttons')
@@ -9,8 +9,10 @@
 @endsection
 
 @section('breadcrumb')
-<a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+<a href="/cursos" class="breadcrumb-item"><i class="icon-certificate mr-2"></i> Cursos</a>
+<a href="/{{$modulo_id}}/modulos" class="breadcrumb-item"><i class="icon-grid6 mr-2"></i> Módulos</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-grid6 mr-2"></i> Disciplinas</a>
 @endsection
 
 @section('content')
@@ -18,25 +20,51 @@
     <!-- Form validation -->
     <div class="card">
         <div class="card-body">
-            <form class="form-validate-jquery" method="GET" action="/pessoas/search">
+            <form class="form-validate-jquery" method="POST" action="{{ @$item ? route('disciplinas.update', [$curso_id, $modulo_id, $item->id]) : route('disciplinas.store', [$curso_id, $modulo_id]) }}">
+                @csrf
+                @if (@$item)
+                    @method('PATCH')
+                @endif
                 <fieldset class="mb-3">
-                    <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">{{ (@$item)? 'Editar' : 'Cadastrar'}}</legend>
+                    <div class="form-group row" style="justify-content: center">
+                        @if(isset($item))
+                        <a href="/{{$curso_id}}/{{$modulo_id}}/disciplinas/" style="color: red">Você está editando registro, clique aqui para cancelar a edição</a>
+                        @endif
+                    </div>
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
-                        <div class="col-lg-9">
-                            <input type="text" name="name" class="form-control" placeholder="Nome Completo">
+                        <div class="col-lg-2"></div>
+                        <label class="col-form-label col-lg-2">Nome da Disciplina<span class="text-danger">*</span></label>
+                        <div class="col-lg-6">
+                            <input type="text" name="nome" class="form-control" placeholder="Nome Completo" value='{{ @$item->nome }}' required>
+                            <input type="hidden" name="curso_id" value="{{ $curso_id }}">
+                            <input type="hidden" name="modulo_id" value="{{ $modulo_id }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-2"></div>
+                        <label class="col-form-label col-lg-2">Carga Horária<span class="text-danger">*</span></label>
+                        <div class="col-lg-1">
+                            <input type="number" name="carga_horaria" class="form-control" value='{{ @$item->carga_horaria }}' required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-2"></div>
+                        <label class="col-form-label col-lg-2">Competência<span class="text-danger">*</span></label>
+                        <div class="col-lg-6">
+                            <textarea name="competencia" class="form-control">{{ @$item->competencia }}</textarea>
                         </div>
                     </div>
                 </fieldset>
                 <div class="d-flex justify-content-end align-items-center">
-                    <button type="submit" class="btn btn-primary ml-3">Pesquisar <i class="icon-search4 ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary ml-3">{{ (@$item)? 'Editar' : 'Cadastrar' }} <i class="icon-paperplane ml-2"></i></button>
                 </div>
             </form>
         </div>
     </div>
 
     <div class="row">
-        <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="click" data-fab-state="closed">
+        {{-- <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="click" data-fab-state="closed">
             <li>
                 <a href="#" class="fab-menu-btn btn bg-teal-400 btn-float rounded-round btn-icon">
                     <i class="fab-icon-open icon-paragraph-justify3"></i>
@@ -47,7 +75,7 @@
                     @role('mediador')
                     <li>
                         <div data-fab-label="Cadastrar">
-                            <a href="{{ route('pessoas.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
+                            <a href="{{ route('modulos.create', 1) }}" class="btn btn-light rounded-round btn-icon btn-float">
                                 <i class="icon-plus2"></i>
                             </a>
                         </div>
@@ -55,7 +83,7 @@
                     @endrole
                 </ul>
             </li>
-        </ul>
+        </ul> --}}
         <div class="col-xl-12">
             <!-- Support tickets -->
             <div class="card">
@@ -63,17 +91,15 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th colspan="5">Tabela de Pessoas</th>
+                                <th colspan="3">Tabela de Disciplinas</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
                                 <td>Nome</td>
-                                <td>CPF</td>
-                                <td>Celular</td>
-                                <td>Email</td>
-                                <td>Data de Nascimento</td>
+                                <td>Carga Horária</td>
+                                <td>Competência</td>
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -84,24 +110,18 @@
                                         <div class="font-weight-semibold">{{ $item->nome }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->cpf }}</div>
+                                        <div class="font-weight-semibold">{{ $item->carga_horaria }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->celular }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->email }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->dataNascimento)) }}</div>
+                                        <div class="font-weight-semibold">{{ $item->competencia }}</div>
                                     </td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-print"></i> Editar</a>
-                                                    <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
+                                                    <a href="{{ route('disciplinas.edit', [$curso_id, $modulo_id, $item->id]) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                                    <form method="POST" action="{{ route('disciplinas.destroy', [$curso_id, $modulo_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item"><i class="icon-cross2 text-danger"></i> Deletar</button>

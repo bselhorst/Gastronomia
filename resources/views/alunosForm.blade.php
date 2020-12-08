@@ -1,7 +1,7 @@
 @extends('layouts/layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span> - {{ @$data ? 'Editar' : 'Cadastrar' }}
+<span class="font-weight-semibold">Alunos</span> - {{ @$data ? 'Editar' : 'Cadastrar' }}
 @endsection
 
 @section('page-title-buttons')
@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <a href="../tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="{{ route('pessoas.index') }}" class="breadcrumb-item"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="{{ route('alunos.index') }}" class="breadcrumb-item"><i class="icon-users mr-2"></i> Alunos</a>
 <span class="breadcrumb-item active">{{ @$data ? 'Editar' : 'Cadastrar' }}</span>
 @endsection
 
@@ -30,7 +30,7 @@
     </div>
 
     <div class="card-body">
-        <form class="form-validate-jquery" method="POST" action="{{ @$data ? route('pessoas.update', $data->id) : route('pessoas.store') }}">
+        <form class="form-validate-jquery" method="POST" action="{{ @$data ? route('alunos.update', $data->id) : route('alunos.store') }}">
             @csrf
             @if (@$data)
                 @method('PATCH')
@@ -176,6 +176,123 @@
                     <label class="col-form-label col-lg-2">Contato de Emergência <span class="text-danger">*</span></label>
                     <div class="col-lg-2">
                         <input type="text" name="numeroEmergencia" class="form-control" data-mask="(00)000000000" data-mask-clearifnotmatch="true" value="{{ @$data->numeroEmergencia }}" placeholder="(__)_________" autocomplete="off">
+                    </div>
+                </div>
+                <legend class="text-uppercase font-size-sm font-weight-bold">Sócio Econômico</legend>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Trabalha? <span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <select class="form-control select-search select2-hidden-accessible" name="trabalha" id="trabalha" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Sim" {{ @$data->trabalha == 'Sim' ? 'selected' : '' }}>Sim</option>
+                            <option value="Não" {{ @$data->trabalha == 'Não' ? 'selected' : '' }}>Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Local do trabalho <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <input type="text" name="localTrabalho" class="form-control" placeholder="Local" value="{{ @$data->localTrabalho }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Telefone do trabalho<span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <input type="text" name="telefoneTrabalho" class="form-control" data-mask="(00)000000000" placeholder="(__)_________" value="{{ @$data->telefoneTrabalho }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Ocupacao <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <input type="text" name="ocupacaoTrabalho" class="form-control" placeholder="Ocupacao" value="{{ @$data->ocupacaoTrabalho }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Tempo de trabalho <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <input type="text" name="tempoTrabalho" class="form-control" placeholder="Tempo" value="{{ @$data->tempoTrabalho }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Possui carteira de trabalho? <span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <select class="form-control select-search select2-hidden-accessible" name="possuiCarteiraDeTrabalho" id="possuiCarteiraDeTrabalho" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Sim" {{ @$data->possuiCarteiraDeTrabalho == 'Sim' ? 'selected' : '' }}>Sim</option>
+                            <option value="Não" {{ @$data->possuiCarteiraDeTrabalho == 'Não' ? 'selected' : '' }}>Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Possui cadastro no Cine? <span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <select class="form-control select-search select2-hidden-accessible" name="cadastroCine" id="cadastroCine" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Sim" {{ @$data->cadastroCine == 'Sim' ? 'selected' : '' }}>Sim</option>
+                            <option value="Não" {{ @$data->cadastroCine == 'Não' ? 'selected' : '' }}>Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Renda Familiar <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <select class="form-control select-search select2-hidden-accessible" name="rendaFamiliar" id="rendaFamiliar" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Menos de 1 salário" {{ @$data->rendaFamiliar == 'Menos de 1 salário' ? 'selected' : '' }}>Menos de 1 salário</option>
+                            <option value="Entre 1 e 2 salários" {{ @$data->rendaFamiliar == 'Entre 1 e 2 salários' ? 'selected' : '' }}>Entre 1 e 2 salários</option>
+                            <option value="Entre 2 e 3 salários" {{ @$data->rendaFamiliar == 'Entre 2 e 3 salários' ? 'selected' : '' }}>Entre 2 e 3 salários</option>
+                            <option value="Entre 3 e 4 salários" {{ @$data->rendaFamiliar == 'Entre 3 e 4 salários' ? 'selected' : '' }}>Entre 3 e 4 salários</option>
+                            <option value="Mais de 4 salários mínimos" {{ @$data->rendaFamiliar == 'Mais de 4 salários mínimos' ? 'selected' : '' }}>Mais de 4 salários mínimos</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Estuda? <span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <select class="form-control select-search select2-hidden-accessible" name="estuda" id="estuda" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Sim" {{ @$data->estuda == 'Sim' ? 'selected' : '' }}>Sim</option>
+                            <option value="Não" {{ @$data->estuda == 'Não' ? 'selected' : '' }}>Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Escolaridade <span class="text-danger">*</span></label>
+                    <div class="col-lg-2">
+                        <select class="form-control select-search select2-hidden-accessible" name="escolaridade" id="escolaridade" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Sim" {{ @$data->escolaridade == 'Sim' ? 'selected' : '' }}>Sim</option>
+                            <option value="Não" {{ @$data->escolaridade == 'Não' ? 'selected' : '' }}>Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">NIS <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <input type="text" name="nis" class="form-control" placeholder="Tempo" value="{{ @$data->nis }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2" style="margin-top: -10px">Recebe algum auxílio financeiro por meio de algum programa do governo? <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <select class="form-control select-search select2-hidden-accessible" name="auxilioFinanceiro" id="auxilioFinanceiro" tabindex="-1" aria-hidden="true" required>
+                            <option value="">Selecione um valor</option>
+                            <option value="Bolsa Família" {{ @$data->auxilioFinanceiro == 'Bolsa Família' ? 'selected' : '' }}>Bolsa Família</option>
+                            <option value="Benefício de prestação continuada - BPC" {{ @$data->auxilioFinanceiro == 'Benefício de prestação continuada - BPC' ? 'selected' : '' }}>Benefício de prestação continuada - BPC</option>
+                            <option value="Outros" {{ @$data->auxilioFinanceiro == 'Outros' ? 'selected' : '' }}>Outros</option>
+                        </select>
                     </div>
                 </div>
             </fieldset>

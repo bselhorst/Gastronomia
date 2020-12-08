@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span>
+<span class="font-weight-semibold">Alunos</span>
 @endsection
 
 @section('page-title-buttons')
@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Alunos</a>
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
     <!-- Form validation -->
     <div class="card">
         <div class="card-body">
-            <form class="form-validate-jquery" method="GET" action="/pessoas/search">
+            <form class="form-validate-jquery" method="GET" action="/alunos/search">
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
                     <div class="form-group row">
@@ -47,7 +47,7 @@
                     @role('mediador')
                     <li>
                         <div data-fab-label="Cadastrar">
-                            <a href="{{ route('pessoas.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
+                            <a href="{{ route('alunos.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
                                 <i class="icon-plus2"></i>
                             </a>
                         </div>
@@ -63,7 +63,7 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th colspan="5">Tabela de Pessoas</th>
+                                <th colspan="5">Tabela de Alunos</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
@@ -100,8 +100,8 @@
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-print"></i> Editar</a>
-                                                    <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
+                                                    <a href="{{ route('alunos.edit', $item->id) }}" class="dropdown-item"><i class="icon-print"></i> Editar</a>
+                                                    <form method="POST" action="{{ route('alunos.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item"><i class="icon-cross2 text-danger"></i> Deletar</button>

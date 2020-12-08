@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span>
+<span class="font-weight-semibold">Cursos</span>
 @endsection
 
 @section('page-title-buttons')
@@ -9,8 +9,8 @@
 @endsection
 
 @section('breadcrumb')
-<a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-certificate mr-2"></i> Cursos</a>
 @endsection
 
 @section('content')
@@ -18,13 +18,14 @@
     <!-- Form validation -->
     <div class="card">
         <div class="card-body">
-            <form class="form-validate-jquery" method="GET" action="/pessoas/search">
+            <form class="form-validate-jquery" method="GET" action="/cursos/search">
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
-                        <div class="col-lg-9">
-                            <input type="text" name="name" class="form-control" placeholder="Nome Completo">
+                        <div class="col-lg-3"></div>
+                        <label class="col-form-label col-lg-1">Nome do Curso<span class="text-danger">*</span></label>
+                        <div class="col-lg-5">
+                            <input type="text" name="name" class="form-control" placeholder="Nome do Curso">
                         </div>
                     </div>
                 </fieldset>
@@ -47,7 +48,7 @@
                     @role('mediador')
                     <li>
                         <div data-fab-label="Cadastrar">
-                            <a href="{{ route('pessoas.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
+                            <a href="{{ route('cursos.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
                                 <i class="icon-plus2"></i>
                             </a>
                         </div>
@@ -63,17 +64,18 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th colspan="5">Tabela de Pessoas</th>
+                                <th colspan="6">Tabela de Cursos</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
                                 <td>Nome</td>
-                                <td>CPF</td>
-                                <td>Celular</td>
-                                <td>Email</td>
-                                <td>Data de Nascimento</td>
+                                <td>Habilitação</td>
+                                <td>Eixo Tecnológico</td>
+                                <td>Forma Ofertada</td>
+                                <td>Qualificação Técnica</td>
+                                <td>CH</td>
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -84,24 +86,29 @@
                                         <div class="font-weight-semibold">{{ $item->nome }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->cpf }}</div>
+                                        <div class="font-weight-semibold">{{ $item->habilitacao }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->celular }}</div>
+                                        <div class="font-weight-semibold">{{ $item->eixo_tecnologico }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->email }}</div>
+                                        <div class="font-weight-semibold">{{ $item->forma_ofertada }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->dataNascimento)) }}</div>
+                                        <div class="font-weight-semibold">{{ $item->qualificacao_tecnica }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">{{ $item->carga_horaria }}</div>
                                     </td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-print"></i> Editar</a>
-                                                    <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
+                                                    <a href="{{ route('cursos.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                                    <a href="{{ route('cursos.PDF', $item->id) }}" class="dropdown-item"><i class="icon-printer"></i> Imprimir</a>
+                                                    <a href="{{ route('modulos.index', $item->id) }}" class="dropdown-item"><i class="icon-grid6"></i> Módulos</a>
+                                                    <form method="POST" action="{{ route('cursos.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item"><i class="icon-cross2 text-danger"></i> Deletar</button>
@@ -113,7 +120,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="6">
+                                <td colspan="7">
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;

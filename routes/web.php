@@ -52,6 +52,51 @@ Route::prefix('almoxarifado')->middleware('role:almoxarifado')->group(function (
     Route::get('pdf/{id}/generate', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'generatePDF'])->name('pdf.generate');
 });
 
+//ALUNOS
+Route::prefix('alunos')->middleware('role:administrativo')->group(function () {
+    Route::post('/', [App\Http\Controllers\AlunosController::class, 'store'])->name('alunos.store');
+    Route::get('/', [App\Http\Controllers\AlunosController::class, 'index'])->name('alunos.index');
+    Route::get('/search', [App\Http\Controllers\AlunosController::class, 'search']);
+    Route::delete('/{id}', [App\Http\Controllers\AlunosController::class, 'destroy'])->name('alunos.destroy');
+    Route::patch('/{id}', [App\Http\Controllers\AlunosController::class, 'update'])->name('alunos.update');
+    Route::get('/create', [App\Http\Controllers\AlunosController::class, 'create'])->name('alunos.create');
+    Route::get('/{id}/edit', [App\Http\Controllers\AlunosController::class, 'edit'])->name('alunos.edit');
+});
+
+//CURSOS
+Route::prefix('cursos')->middleware('role:administrativo')->group(function () {
+    Route::post('/', [App\Http\Controllers\CursosController::class, 'store'])->name('cursos.store');
+    Route::get('/', [App\Http\Controllers\CursosController::class, 'index'])->name('cursos.index');
+    Route::get('/search', [App\Http\Controllers\CursosController::class, 'search']);
+    Route::delete('/{id}', [App\Http\Controllers\CursosController::class, 'destroy'])->name('cursos.destroy');
+    Route::patch('/{id}', [App\Http\Controllers\CursosController::class, 'update'])->name('cursos.update');
+    Route::get('/create', [App\Http\Controllers\CursosController::class, 'create'])->name('cursos.create');
+    Route::get('/{id}/edit', [App\Http\Controllers\CursosController::class, 'edit'])->name('cursos.edit');
+    Route::get('pdf/{id}/generatePDF', [App\Http\Controllers\CursosController::class, 'generatePDF'])->name('cursos.PDF');
+});
+
+//MODULOS
+Route::prefix('{idCurso}/modulos')->middleware('role:administrativo')->group(function () {
+    Route::post('/', [App\Http\Controllers\CursoModulosController::class, 'store'])->name('modulos.store');
+    Route::get('/', [App\Http\Controllers\CursoModulosController::class, 'index'])->name('modulos.index');
+    Route::get('/search', [App\Http\Controllers\CursoModulosController::class, 'search']);
+    Route::delete('/{id}', [App\Http\Controllers\CursoModulosController::class, 'destroy'])->name('modulos.destroy');
+    Route::patch('/{id}', [App\Http\Controllers\CursoModulosController::class, 'update'])->name('modulos.update');
+    Route::get('/create', [App\Http\Controllers\CursoModulosController::class, 'create'])->name('modulos.create');
+    Route::get('/{id}/edit', [App\Http\Controllers\CursoModulosController::class, 'edit'])->name('modulos.edit');
+});
+
+//DISCIPLINAS
+Route::prefix('{idCurso}/{idModulo}/disciplinas')->middleware('role:administrativo')->group(function () {
+    Route::post('/', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'store'])->name('disciplinas.store');
+    Route::get('/', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'index'])->name('disciplinas.index');
+    Route::get('/search', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'search']);
+    Route::delete('/{id}', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'destroy'])->name('disciplinas.destroy');
+    Route::patch('/{id}', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'update'])->name('disciplinas.update');
+    Route::get('/create', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'create'])->name('disciplinas.create');
+    Route::get('/{id}/edit', [App\Http\Controllers\CursoModuloDisciplinasController::class, 'edit'])->name('disciplinas.edit');
+});
+
 //PATRIMONIO
 Route::prefix('patrimonio')->middleware('role:patrimonio')->group(function () {
     Route::post('/', [App\Http\Controllers\PatrimonioController::class, 'store'])->name('patrimonio.store');
