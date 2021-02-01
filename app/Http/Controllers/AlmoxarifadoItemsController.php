@@ -134,7 +134,7 @@ class AlmoxarifadoItemsController extends Controller
         ->leftJoin('aux_unidades', 'aux_unidades.id', 'almoxarifado_items.unidade_id')
         ->where('almoxarifado_items.saldo','>',0)
         ->orderBy('almoxarifado_items.descricao', 'ASC')
-        ->paginate(15);
+        ->get();
         return view('almoxarifadoRetirar', compact('data'));
     }
 
@@ -171,9 +171,10 @@ class AlmoxarifadoItemsController extends Controller
     }
 
     public function historico_retiradas(){
+        //$data = AlmoxarifadoRetiradas::select('codigo', 'solicitante', 'created_at', 'usuario')
         $data = AlmoxarifadoRetiradas::select('codigo', 'solicitante', 'created_at', 'usuario')
         ->orderBy('created_at', 'DESC')
-        ->groupBy('codigo', 'solicitante', 'created_at', 'usuario')
+        ->groupBy('codigo', 'solicitante', 'usuario')
         ->paginate(15);
         /*$data = DB::table('almoxarifado_retiradas')->select('almoxarifado_retiradas.codigo', 'almoxarifado_retiradas.solicitante', 'almoxarifado_retiradas.created_at')
         ->groupBy('almoxarifado_retiradas.codigo')
