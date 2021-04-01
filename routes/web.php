@@ -50,6 +50,7 @@ Route::prefix('almoxarifado')->middleware('role:almoxarifado')->group(function (
     Route::patch('/{id}/cancelarEntrada', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'cancelarEntrada'])->name('almoxarifado.cancelarEntrada');
     Route::patch('/{id}/cancelarRetirada', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'cancelarRetirada'])->name('almoxarifado.cancelarRetirada');
     Route::get('pdf/{id}/generate', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'generatePDF'])->name('pdf.generate');
+    Route::get('pdfcompleto/generate', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'generatePDFCompleto'])->name('pdfcompleto.generate');
 });
 
 //ALUNOS

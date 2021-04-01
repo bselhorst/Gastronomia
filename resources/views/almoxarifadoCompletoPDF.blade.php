@@ -18,7 +18,7 @@
     <br><br>
     <table width="100%" style="border: 1px solid">
         <tr align="center">
-            <td colspan="2"><b>RELATÓRIO DE RETIRADA {{ (new \DateTime($data[0]->created_at))->format("d-m-Y") }}</b></td>
+            <td colspan="2"><b>RELATÓRIO DE RETIRADA</b></td>
         </tr>
     </table>
     <br>

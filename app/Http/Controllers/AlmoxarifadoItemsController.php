@@ -245,7 +245,7 @@ class AlmoxarifadoItemsController extends Controller
     }
     public function generatePDF($id)
     {
-        $data = DB::table('almoxarifado_retiradas')->select('almoxarifado_retiradas.id', 'almoxarifado_items.descricao', 'almoxarifado_retiradas.quantidade', 'almoxarifado_retiradas.solicitante', 'aux_unidades.unidade')
+        $data = DB::table('almoxarifado_retiradas')->select('almoxarifado_retiradas.id', 'almoxarifado_items.descricao', 'almoxarifado_retiradas.quantidade', 'almoxarifado_retiradas.solicitante', 'aux_unidades.unidade', 'almoxarifado_retiradas.created_at')
         ->leftJoin('almoxarifado_items', 'almoxarifado_retiradas.item_id', 'almoxarifado_items.id')
         ->leftJoin('aux_unidades', 'aux_unidades.id', 'almoxarifado_items.unidade_id')
         ->where('almoxarifado_retiradas.codigo', $id)
@@ -254,5 +254,17 @@ class AlmoxarifadoItemsController extends Controller
         $pdf = PDF::loadView('almoxarifadoHistoricoRetiradasPDF', compact('data'));
         return $pdf->download('retirada.pdf');
     }
+
+    public function generatePDFCompleto()
+    {
+        $data = DB::table('almoxarifado_retiradas')->select('almoxarifado_retiradas.id', 'almoxarifado_items.descricao', 'almoxarifado_retiradas.quantidade', 'almoxarifado_retiradas.solicitante', 'aux_unidades.unidade', 'almoxarifado_retiradas.created_at')
+        ->leftJoin('almoxarifado_items', 'almoxarifado_retiradas.item_id', 'almoxarifado_items.id')
+        ->leftJoin('aux_unidades', 'aux_unidades.id', 'almoxarifado_items.unidade_id')
+        ->orderBy('almoxarifado_items.descricao', 'ASC')
+        ->get();
+        $pdf = PDF::loadView('almoxarifadoCompletoPDF', compact('data'));
+        return $pdf->download('pdfCompleto.pdf');
+    }
+
 
 }

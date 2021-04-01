@@ -112,4 +112,5 @@ class PatrimonioController extends Controller
         $patrimonios = DB::table('patrimonios')->where([['descricao', 'like', '%'.$descricao.'%'], ['numero_patrimonio', 'like', '%'.$patrimonio.'%']])->paginate(15);
         return view('patrimonioIndex', compact('patrimonios'));
     }
+
 }

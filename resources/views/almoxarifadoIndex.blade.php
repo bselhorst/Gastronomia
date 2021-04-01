@@ -58,6 +58,13 @@
                             </a>
                         </div>
                     </li>
+                    <li>
+                        <div data-fab-label="Imprimir todos os itens">
+                            <a href="{{ route('pdfcompleto.generate') }}" class="btn btn-light rounded-round btn-icon btn-float">
+                                <i class="icon-printer"></i>
+                            </a>
+                        </div>
+                    </li>
                     {{-- @endrole --}}
                 </ul>
             </li>
