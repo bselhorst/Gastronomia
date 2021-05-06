@@ -14,7 +14,13 @@
 @endsection
 
 @section('content')
-
+    @if (\Session::has('success'))
+    <div class="alert alert-success bg-white alert-styled-left alert-arrow-left alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+        <h6 class="alert-heading font-weight-semibold mb-1">Sucesso</h6>
+        {!!\Session::get('success')!!}
+    </div>
+    @endif
     <!-- Form validation -->
     <div class="card">
         <div class="card-body">

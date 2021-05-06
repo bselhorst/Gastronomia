@@ -98,6 +98,6 @@ class AuxUnidadesController extends Controller
     public function destroy($id)
     {
         AuxUnidades::findOrFail($id)->delete();
-        return redirect('/auxunidades');
+        return redirect('/auxunidades')->with('success', 'Registro excluído com sucesso!');
     }
 }

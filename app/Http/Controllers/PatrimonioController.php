@@ -103,7 +103,7 @@ class PatrimonioController extends Controller
     public function destroy($id)
     {
         Patrimonio::findOrFail($id)->delete();
-        return redirect('/patrimonio');
+        return redirect('/patrimonio')->with('sucess', 'Registro excluído com sucesso!');
     }
 
     public function search(Request $request){

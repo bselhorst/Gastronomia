@@ -114,7 +114,7 @@ class AlmoxarifadoItemsController extends Controller
     public function destroy($id)
     {
         AlmoxarifadoItems::findOrFail($id)->delete();
-        return redirect('/almoxarifado')->with('success', 'Registro deletado com sucesso!');
+        return redirect('/almoxarifado')->with('success', 'Registro excluído com sucesso!');
     }
 
     public function search(Request $request){
@@ -167,7 +167,7 @@ class AlmoxarifadoItemsController extends Controller
             }
         }
         //AlmoxarifadoRetiradas::create($validatedData);
-        return redirect('/almoxarifado')->with('success', 'Registro editado com sucesso!');
+        return redirect('/almoxarifado')->with('success', 'Retirada realizada com sucesso!');
     }
 
     public function historico_retiradas(){
@@ -219,7 +219,7 @@ class AlmoxarifadoItemsController extends Controller
         $entrada = AlmoxarifadoEntradas::findOrFail($id);
         AlmoxarifadoItems::where('id', $entrada->item_id)->decrement('saldo', floatval($entrada->quantidade));
         AlmoxarifadoEntradas::findOrFail($id)->delete();
-        return redirect('/almoxarifado')->with('success', 'Registro deletado com sucesso!');
+        return redirect('/almoxarifado')->with('success', 'Registro excluído com sucesso!');
     }
 
     public function cancelarRetirada(Request $request, $id)
@@ -230,7 +230,7 @@ class AlmoxarifadoItemsController extends Controller
             AlmoxarifadoRetiradas::findOrFail($retirada->id)->delete();
         }
 
-        return redirect('/almoxarifado')->with('success', 'Registro deletado com sucesso!');
+        return redirect('/almoxarifado')->with('success', 'Registro excluído com sucesso!');
     }
 
     public function preview()
@@ -257,11 +257,11 @@ class AlmoxarifadoItemsController extends Controller
 
     public function generatePDFCompleto()
     {
-        $data = DB::table('almoxarifado_retiradas')->select('almoxarifado_retiradas.id', 'almoxarifado_items.descricao', 'almoxarifado_retiradas.quantidade', 'almoxarifado_retiradas.solicitante', 'aux_unidades.unidade', 'almoxarifado_retiradas.created_at')
-        ->leftJoin('almoxarifado_items', 'almoxarifado_retiradas.item_id', 'almoxarifado_items.id')
+        $data = DB::table('almoxarifado_items')->select('almoxarifado_items.id', 'almoxarifado_items.descricao', 'almoxarifado_items.saldo', 'aux_unidades.unidade', 'almoxarifado_items.codigo')
         ->leftJoin('aux_unidades', 'aux_unidades.id', 'almoxarifado_items.unidade_id')
         ->orderBy('almoxarifado_items.descricao', 'ASC')
         ->get();
+
         $pdf = PDF::loadView('almoxarifadoCompletoPDF', compact('data'));
         return $pdf->download('pdfCompleto.pdf');
     }

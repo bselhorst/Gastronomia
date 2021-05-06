@@ -13,7 +13,7 @@
     <div align="center" style="padding-top: 5px">
         <b>Escola de Gastronomia e Hospitalidade</b>
         <br>
-        <b>Divisão de Almoxarifado</b>
+        <b>Coordenação Administrativa</b>
     </div>
     <br><br>
     <table width="100%" style="border: 1px solid">
@@ -40,7 +40,7 @@
                 <td align="center">{{ $count }}</td>
                 <td align="left">{{ $item->descricao }}</td>
                 <td align="center">{{ $item->unidade }}</td>
-                <td align="center">{{ $item->quantidade }}</td>
+                <td align="center">{{ $item->saldo }}</td>
             </tr>
             {{ $count++ }}
             @endforeach
@@ -49,6 +49,9 @@
     <br><br><br>
     <table width="100%">
         <tr>
+        <td><em>*Os valores mostrados na tabela são referentes a data de {{ date("d-m-Y h:i:s") }}</em></td>
+        </tr>
+        {{-- <tr>
             <td style="width: 50%">___________________________________________</td>
             <td style="width: 50%">___________________________________________</td>
         </tr>
@@ -59,7 +62,7 @@
         <tr>
             <td style="width: 50%" align="center"></td>
             <td style="width: 50%; font-size: 14px" align="center">Solicitante</td>
-        </tr>
+        </tr> --}}
     </table>
 </body>
 </html>

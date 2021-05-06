@@ -90,7 +90,7 @@ class UsuariosController extends Controller
         ]);
         $validatedData['password'] = bcrypt($validatedData['password']);
         User::whereId($id)->update($validatedData);
-        return redirect('/usuarios')->with('success', 'Usuário Editado com sucesso!');
+        return redirect('/usuarios')->with('success', 'Usuário editado com sucesso!');
     }
 
     /**

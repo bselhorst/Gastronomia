@@ -99,6 +99,6 @@ class AuxFornecedoresController extends Controller
     public function destroy($id)
     {
         AuxFornecedores::findOrFail($id)->delete();
-        return redirect('/auxfornecedores')->with('success', 'Registro deletado com sucesso!');
+        return redirect('/auxfornecedores')->with('success', 'Registro excluído com sucesso!');
     }
 }

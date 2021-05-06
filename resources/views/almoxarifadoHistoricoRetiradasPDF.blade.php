@@ -13,7 +13,7 @@
     <div align="center" style="padding-top: 5px">
         <b>Escola de Gastronomia e Hospitalidade</b>
         <br>
-        <b>Divisão de Almoxarifado</b>
+        <b>Coordenação Administrativa</b>
     </div>
     <br><br>
     <table width="100%" style="border: 1px solid">
