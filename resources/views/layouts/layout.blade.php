@@ -27,7 +27,7 @@
 
 	<!-- Theme JS files -->
 	<script src="{{ asset('backend/global_assets/js/plugins/ui/fab.min.js') }}"></script>
-  <script src="{{ asset('backend/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
+    <script src="{{ asset('backend/global_assets/js/plugins/forms/validation/validate.min.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
@@ -123,7 +123,7 @@
 			<div class="sidebar-content">
 
 				<!-- User menu -->
-				<div class="sidebar-user">
+				{{-- <div class="sidebar-user">
 					<div class="card-body">
 						<div class="media">
 							<!--<div class="mr-3">
@@ -142,7 +142,7 @@
 							</div>-->
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				<!-- /user menu -->
 
 				<!-- Main navigation -->

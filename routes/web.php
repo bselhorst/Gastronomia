@@ -77,7 +77,7 @@ Route::prefix('cursos')->middleware('role:administrativo')->group(function () {
 });
 
 //MODULOS
-Route::prefix('{idCurso}/modulos')->middleware('role:administrativo')->group(function () {
+Route::prefix('cursos/{idCurso}/modulos')->middleware('role:administrativo')->group(function () {
     Route::post('/', [App\Http\Controllers\CursoModulosController::class, 'store'])->name('modulos.store');
     Route::get('/', [App\Http\Controllers\CursoModulosController::class, 'index'])->name('modulos.index');
     Route::get('/search', [App\Http\Controllers\CursoModulosController::class, 'search']);

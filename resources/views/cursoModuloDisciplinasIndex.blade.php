@@ -62,28 +62,7 @@
             </form>
         </div>
     </div>
-
     <div class="row">
-        {{-- <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="click" data-fab-state="closed">
-            <li>
-                <a href="#" class="fab-menu-btn btn bg-teal-400 btn-float rounded-round btn-icon">
-                    <i class="fab-icon-open icon-paragraph-justify3"></i>
-                    <i class="fab-icon-close icon-cross2"></i>
-                </a>
-
-                <ul class="fab-menu-inner">
-                    @role('mediador')
-                    <li>
-                        <div data-fab-label="Cadastrar">
-                            <a href="{{ route('modulos.create', 1) }}" class="btn btn-light rounded-round btn-icon btn-float">
-                                <i class="icon-plus2"></i>
-                            </a>
-                        </div>
-                    </li>
-                    @endrole
-                </ul>
-            </li>
-        </ul> --}}
         <div class="col-xl-12">
             <!-- Support tickets -->
             <div class="card">
@@ -112,6 +91,7 @@
                                     <td>
                                         <div class="font-weight-semibold">{{ $item->carga_horaria }}</div>
                                     </td>
+
                                     <td>
                                         <div class="font-weight-semibold">{{ $item->competencia }}</div>
                                     </td>
