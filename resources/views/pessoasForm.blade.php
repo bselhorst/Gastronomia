@@ -8,7 +8,7 @@
 @endsection
 
 @section('breadcrumb')
-<a href="../tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
 <a href="{{ route('pessoas.index') }}" class="breadcrumb-item"><i class="icon-users mr-2"></i> Pessoas</a>
 <span class="breadcrumb-item active">{{ @$data ? 'Editar' : 'Cadastrar' }}</span>
 @endsection

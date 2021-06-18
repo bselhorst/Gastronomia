@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Auth::routes();
 
 //AUX_UNIDADES
@@ -76,6 +65,26 @@ Route::prefix('cursos')->middleware('role:administrativo')->group(function () {
     Route::get('pdf/{id}/generatePDF', [App\Http\Controllers\CursosController::class, 'generatePDF'])->name('cursos.PDF');
 });
 
+//CURSOTurmas
+Route::prefix('cursoTurmas')->middleware('role:administrativo')->group(function () {
+    Route::post('/', [App\Http\Controllers\CursoTurmasController::class, 'store'])->name('cursoTurmas.store');
+    Route::get('/', [App\Http\Controllers\CursoTurmasController::class, 'index'])->name('cursoTurmas.index');
+    Route::get('/search', [App\Http\Controllers\CursoTurmasController::class, 'search']);
+    Route::delete('/{id}', [App\Http\Controllers\CursoTurmasController::class, 'destroy'])->name('cursoTurmas.destroy');
+    Route::patch('/{id}', [App\Http\Controllers\CursoTurmasController::class, 'update'])->name('cursoTurmas.update');
+    Route::get('/create', [App\Http\Controllers\CursoTurmasController::class, 'create'])->name('cursoTurmas.create');
+    Route::get('/{id}/edit', [App\Http\Controllers\CursoTurmasController::class, 'edit'])->name('cursoTurmas.edit');
+});
+
+//TURMA ALUNOS
+Route::prefix('cursoTurmas/{turma_id}/turmaAlunos')->middleware('role:administrativo')->group(function (){
+    Route::post('/', [App\Http\Controllers\TurmaAlunosController::class, 'store'])->name('turmaAlunos.store');
+    Route::get('/', [App\Http\Controllers\TurmaAlunosController::class, 'index'])->name('turmaAlunos.index');
+    Route::delete('/{id}', [App\Http\Controllers\TurmaAlunosController::class, 'destroy'])->name('turmaAlunos.destroy');
+    Route::patch('/{id}', [App\Http\Controllers\TurmaAlunosController::class, 'update'])->name('turmaAlunos.update');
+    Route::get('/{id}/edit', [App\Http\Controllers\TurmaAlunosController::class, 'edit'])->name('turmaAlunos.edit');
+});
+
 //MODULOS
 Route::prefix('cursos/{idCurso}/modulos')->middleware('role:administrativo')->group(function () {
     Route::post('/', [App\Http\Controllers\CursoModulosController::class, 'store'])->name('modulos.store');
@@ -131,7 +140,3 @@ Route::prefix('usuarios')->middleware('role:admin')->group(function () {
 });
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-//Route::get('pdf/preview', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'preview'])->name('pdf.preview');
-//Route::get('pdf/{id}/generate', [App\Http\Controllers\AlmoxarifadoItemsController::class, 'generatePDF'])->name('pdf.generate');
-//Route::get('/usuarios', [App\Http\Controllers\UsuariosController::class, 'index'])->name('UsuariosIndex');

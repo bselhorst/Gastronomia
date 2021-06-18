@@ -122,29 +122,6 @@
 			<!-- Sidebar content -->
 			<div class="sidebar-content">
 
-				<!-- User menu -->
-				{{-- <div class="sidebar-user">
-					<div class="card-body">
-						<div class="media">
-							<!--<div class="mr-3">
-								<a href="#"><img src="{{ asset('backend/global_assets/images/placeholders/placeholder.jpg') }}" width="38" height="38" class="rounded-circle" alt=""></a>
-							</div>-->
-
-							<div class="media-body">
-								<div class="media-title font-weight-semibold">{{ $user[0]." ".last($user) }}</div>
-								<div class="font-size-xs opacity-50">
-									Funcionário
-								</div>
-							</div>
-
-							<!--<div class="ml-3 align-self-center">
-								<a href="#" class="text-white"><i class="icon-cog3"></i></a>
-							</div>-->
-						</div>
-					</div>
-				</div> --}}
-				<!-- /user menu -->
-
 				<!-- Main navigation -->
 				<div class="card card-sidebar-mobile">
 					<ul class="nav nav-sidebar" data-nav-type="accordion">
@@ -161,7 +138,49 @@
 						</li>
 						<!-- /main -->
 
-                        <!-- Usuários -->
+                        <!-- administrativo -->
+						@role(['administrativo', 'alunos'])
+						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Administrativo</div> <i class="icon-menu" title="Forms"></i></li>
+                            @role('administrativo')
+                            <li class="nav-item nav-item-submenu">
+                                <a href="#" class="nav-link"><i class="icon-users"></i> <span>Alunos</span></a>
+                                <ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+                                    <li class="nav-item"><a href="{{ route('alunos.create') }}" class="nav-link">Cadastrar Aluno</a></li>
+                                    <li class="nav-item"><a href="{{ route('alunos.index') }}" class="nav-link">Lista de Alunos</a></li>
+                                </ul>
+                            </li>
+                            @endrole
+                            @role('administrativo')
+                            <li class="nav-item nav-item-submenu">
+                                <a href="#" class="nav-link"><i class="icon-certificate"></i> <span>Cursos</span></a>
+                                <ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+                                    <li class="nav-item"><a href="{{ route('cursos.create') }}" class="nav-link">Cadastrar Curso</a></li>
+                                    <li class="nav-item"><a href="{{ route('cursos.index') }}" class="nav-link">Lista de Cursos</a></li>
+                                </ul>
+                            </li>
+                            @endrole
+                            @role('administrativo')
+                            <li class="nav-item nav-item-submenu">
+                                <a href="#" class="nav-link"><i class="icon-users"></i> <span>Funcionários</span></a>
+                                <ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+                                    <li class="nav-item"><a href="{{ route('pessoas.create') }}" class="nav-link">Cadastrar</a></li>
+                                    <li class="nav-item"><a href="{{ route('pessoas.index') }}" class="nav-link">Listar</a></li>
+                                </ul>
+                            </li>
+                            @endrole
+                            @role('administrativo')
+                            <li class="nav-item nav-item-submenu">
+                                <a href="#" class="nav-link"><i class="icon-book"></i> <span>Turmas</span></a>
+                                <ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+                                    <li class="nav-item"><a href="{{ route('cursoTurmas.create') }}" class="nav-link">Cadastrar Turma</a></li>
+                                    <li class="nav-item"><a href="{{ route('cursoTurmas.index') }}" class="nav-link">Lista de Turmas</a></li>
+                                </ul>
+                            </li>
+                            @endrole
+						@endrole
+						<!-- /administrativo -->
+
+                        <!-- almoxarifado -->
 						@role(['patrimonio', 'almoxarifado'])
 						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Almoxarifado e Patrimônio</div> <i class="icon-menu" title="Forms"></i></li>
                             @role('almoxarifado')
@@ -187,7 +206,7 @@
                             </li>
                             @endrole
 						@endrole
-						<!-- /usuarios -->
+						<!-- /almoxarifado -->
 
 						<!-- Usuários -->
 						@role('admin')

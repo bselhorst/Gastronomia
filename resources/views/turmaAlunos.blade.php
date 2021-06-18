@@ -1,7 +1,8 @@
 @extends('layouts.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span>
+<span class="font-weight-semibold">Turma: {{ $turma->nome }}</span><br>
+<span class="font-weight-semibold">Lista de Alunos</span>
 @endsection
 
 @section('page-title-buttons')
@@ -10,26 +11,53 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Alunos</a>
 @endsection
 
 @section('content')
-
+    @if (\Session::has('success'))
+    <div class="alert alert-success bg-white alert-styled-left alert-arrow-left alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+        <h6 class="alert-heading font-weight-semibold mb-1">Sucesso</h6>
+        {!!\Session::get('success')!!}
+    </div>
+    @endif
     <!-- Form validation -->
+
     <div class="card">
         <div class="card-body">
-            <form class="form-validate-jquery" method="GET" action="/pessoas/search">
+            <form class="form-validate-jquery" method="POST" action="{{ (@$dataEdit) ? route('turmaAlunos.update', $dataEdit->id) : route('turmaAlunos.store', [$turma->id]) }}">
+                @csrf
+                @if(isset($dataEdit))
+                    @method('PATCH')
+                @endif
                 <fieldset class="mb-3">
-                    <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">{{ (@$dataEdit) ? 'Editar' : 'Cadastrar'}}</legend>
+                    <div class="form-group row" style="justify-content: center">
+                        @if(isset($dataEdit))
+                            <a href="/auxunidades" style="color: red">Você está editando registro, clique aqui para cancelar a edição</a>
+                        @endif
+                    </div>
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
-                        <div class="col-lg-9">
-                            <input type="text" name="name" class="form-control" placeholder="Nome Completo">
+                        <div class="col-lg-3"></div>
+                        <label class="col-form-label col-lg-1">Aluno<span class="text-danger"></span></label>
+                        <div class="col-lg-4">
+                            <input type='hidden' name='turma_id' value='{{ $turma->id }}'>
+                            <select class="form-control select-search select2-hidden-accessible" name="aluno_id" id="aluno_id" tabindex="-1" aria-hidden="true" required>
+                                @if (count($alunos) == 0)
+                                    <option value="">Não existem alunos cadastrados</option>
+                                @else
+                                <option value="">Selecione uma Aluno</option>
+                                @endif
+                                @foreach ($alunos as $aluno)
+                                    <option value="{{ $aluno->id }}" {{ (@$data->aluno_id == $aluno->id) ? 'selected' : '' }}>{{ $aluno->nome }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </fieldset>
                 <div class="d-flex justify-content-end align-items-center">
-                    <button type="submit" class="btn btn-primary ml-3">Pesquisar <i class="icon-search4 ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary ml-3">{{(@$dataEdit) ? 'Editar' : 'Adicionar' }}<i class="icon-add ml-2"></i></button>
                 </div>
             </form>
         </div>
@@ -44,10 +72,10 @@
                 </a>
 
                 <ul class="fab-menu-inner">
-                    @role('administrativo')
+                    @role('patrimonio')
                     <li>
                         <div data-fab-label="Cadastrar">
-                            <a href="{{ route('pessoas.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
+                            <a href="{{ route('patrimonio.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
                                 <i class="icon-plus2"></i>
                             </a>
                         </div>
@@ -63,17 +91,13 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th colspan="5">Tabela de Pessoas</th>
+                                <th>Tabela de Alunos</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
-                                <td>Nome</td>
-                                <td>CPF</td>
-                                <td>Celular</td>
-                                <td>Email</td>
-                                <td>Data de Nascimento</td>
+                                <td>Aluno</td>
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -83,29 +107,19 @@
                                     <td>
                                         <div class="font-weight-semibold">{{ $item->nome }}</div>
                                     </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->cpf }}</div>
                                     </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->celular }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->email }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->dataNascimento)) }}</div>
-                                    </td>
-                                    <td class="text-center">
+                                    <td class="text-right">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
-                                                    <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
+
+                                                    <form method="POST" action="{{ route('turmaAlunos.destroy', [$turma->id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item"><i class="icon-cross2 text-danger"></i> Deletar</button>
                                                     </form>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -113,13 +127,11 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="6">
+                                <td colspan=5>
                                     @php
-                                        if(request()->name){
-                                            $url = '&name='.request()->name;
-                                        }else{
-                                            $url='';
-                                        }
+                                        //$url = '';
+                                        //request()->descricao? $url.='&descricao='.request()->descricao : '';
+                                        //request()->data? $url.='&patrimonio='.request()->descricao : '';
                                     @endphp
                                     <ul class="pagination pagination-pager pagination-rounded justify-content-center">
                                         @if ($data->previousPageUrl())
